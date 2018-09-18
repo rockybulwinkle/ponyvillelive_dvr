@@ -12,8 +12,12 @@ def get_req(path):
         raise Exception("Status %d: %s"%(resp.status_code, path))
 
     j = json.loads(resp.content.decode("utf-8"))
-    return j
+    if j["status"] != "success":
+        print("nonsucessful in getting %s"%path)
+        return None
+
+    return j["result"]
 
 
-nowplaying=get_req("http://ponyvillelive.com/api/nowplaying/index/20")
-sched=get_req("http://ponyvillelive.com/api/schedule/index/20")
+nowplaying=get_req("http://ponyvillelive.com/api/nowplaying")
+sched=get_req("http://ponyvillelive.com/api/schedule")
